@@ -14,7 +14,7 @@ test: test_flags $(exefiles)
 	@for f in $(exefiles); do echo "Running $$f"; ./$$f; done;
 
 test_flags:
-	$(eval DFLAGS += -funittest -fmain)
+	$(eval DFLAGS += -funittest)
 
 .phony: all test test_flags
 

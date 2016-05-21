@@ -60,7 +60,8 @@ Dual!(T) make_dual(T)(T a, T b=0) {
 
 
 unittest {
-    
+    import std.stdio;
+
     auto a = make_dual(1.0,2.0);
     auto b = make_dual(1.0,2.0);
     assert(a == b);
@@ -80,4 +81,11 @@ unittest {
 
     auto h = a+2;
     assert(h == make_dual(3.0,2.0));
+
+
+
+    writeln("All tests completed successfully");
+}
+version(unittest) {
+    void main() {}
 }

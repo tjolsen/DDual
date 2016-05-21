@@ -41,17 +41,17 @@ struct Dual(T) {
     }
     
     Dual!(T) opBinary(string op, L)(L rhs) if(isNumeric!(L) && isAssignable!(T,L)) {
-	return this.opBinary!(op)(make_dual(rhs));
+	return this.opBinary!(op,T)(make_dual(to!(T)(rhs),to!(T)(0)));
     }
 
     Dual!(T) opBinaryRight(string op, L)(L lhs) if(isNumeric!(L) && isAssignable!(T,L)) {
-	return make_dual(to!(T)(lhs)).opBinary!(op)(this);
+	return make_dual(to!(T)(lhs),to!(T)(0)).opBinary!(op,T)(this);
     }
 }//end struct
 
 
-Dual!(T) make_dual(T,L)(T a, L b=0) if(isAssignable!(T,L)){
-    return Dual!(T)(a,to!(T)(b));
+Dual!(T) make_dual(T)(T a, T b=0) {
+    return Dual!(T)(a,b);
 }
 //Dual!(L) make_dual(T,L)(T a, L b=0) if(!isAssignable!(T,L)){
 //    return Dual!(L)(to!(L)(a),b);

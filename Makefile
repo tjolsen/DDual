@@ -1,20 +1,20 @@
 dfiles = $(wildcard *.d)
 exefiles = $(dfiles:.d=.exe)
 
-D = dmd
+D = gdc
 
 DFLAGS = 
 
 all: $(exefiles)
 
 %.exe: %.d
-	$(D) $(DFLAGS) $< -of$@
+	$(D) $(DFLAGS) $< -o $@
 
 test: test_flags $(exefiles)
 	@for f in $(exefiles); do echo "Running $$f"; ./$$f; done;
 
 test_flags:
-	$(eval DFLAGS += -unittest -main)
+	$(eval DFLAGS += -funittest -fmain)
 
 .phony: all test test_flags
 

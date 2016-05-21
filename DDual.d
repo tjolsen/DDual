@@ -79,5 +79,5 @@ unittest {
     assert(c == g);
 
     auto h = a+2;
-    assert(h == make_dual(3.0));
+    assert(h == make_dual(3.0,2.0));
 }

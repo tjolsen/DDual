@@ -1,20 +1,26 @@
 dfiles = $(wildcard *.d)
+ofiles = $(dfiles:.d=.o)
 exefiles = $(dfiles:.d=.exe)
 
-D = gdc
+D = dmd
 
-DFLAGS = 
+DFLAGS = -O -c
+
+LDFLAGS = 
 
 all: $(exefiles)
 
-%.exe: %.d
-	$(D) $(DFLAGS) $< -o $@
+%.exe: %.o
+	$(D) $(LDFLAGS) $< -of$@
 
-test: test_flags $(exefiles)
+%.o: %.d
+	$(D) $(DFLAGS) $<
+
+test: test_flags $(ofiles) $(exefiles)
 	@for f in $(exefiles); do echo "Running $$f"; ./$$f; done;
 
 test_flags:
-	$(eval DFLAGS += -funittest)
+	$(eval DFLAGS += -unittest)
 
 .phony: all test test_flags
 

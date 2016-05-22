@@ -25,6 +25,14 @@ struct Dual(T) {
         static if(op == "-") {
             return Dual!(T)(-first, -second);
         }
+        else static if(op == "++") {
+            ++first;
+            return this;
+        }
+        else static if(op == "--") {
+            --first;
+            return this;
+        }
         else {
             static assert(0, "Operator '"~op~"' not implemented");
         }
@@ -144,12 +152,12 @@ unittest {
 
     //------------------------------------------------------------
     // Test basic arithmetic operations
-    //------------------------------------------------------------
-    auto a = make_dual(1.0,2.0);
-    auto b = make_dual(1.0,2.0);
+    //-----------------------------------------------------------
+    auto a = make_dual(1.0,2);
+    auto b = make_dual(1.0,2);
     assert(a == b);
 
-    auto c = make_dual(2.0, 4.0);
+    auto c = make_dual(2.0, 4);
     auto d = a+b;
     assert(c == d);
 
@@ -170,6 +178,14 @@ unittest {
 
     auto j = -a;
     assert(j == -1*a);
+    
+    auto k = a;
+    ++k;
+    assert(k == a+1);
+
+    auto l = a;
+    --l;
+    assert(l == a-1);
 
     //------------------------------------------------------------
     // Test derivatives of easy functions
